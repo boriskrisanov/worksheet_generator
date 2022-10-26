@@ -63,8 +63,6 @@ def generate(difficulty=1) -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		print(solution)
-
 		equation = pretty(equation)
 		question = Question(str(equation), f"x = {solution.args[0]}")
 		return question
