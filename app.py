@@ -1,7 +1,7 @@
 from flask import Flask, request
 
 from Question import Question
-from topics import linear_equations, simultaneous_equations, factorising_quadratics
+from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics
 from util import random_element
 
 app = Flask(__name__)
@@ -47,6 +47,8 @@ def index():
 				questions.append(simultaneous_equations.generate())
 			case "factorising_quadratics":
 				questions.append(factorising_quadratics.generate())
+			case "solving_quadratics":
+				questions.append(solving_quadratics.generate())
 
 	questions_json = [question.json() for question in questions]
 
