@@ -2,7 +2,7 @@ from flask import Flask, request
 
 from Question import Question
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
-	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles
+	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying
 from util import random_element, create_question_images_dir
 
 app = Flask(__name__)
@@ -58,6 +58,8 @@ def index():
 				questions.append(right_angle_trig_missing_sides.generate())
 			case "right_angle_trig_missing_angles":
 				questions.append(right_angle_trig_missing_angles.generate())
+			case "simplifying":
+				questions.append(simplifying.generate())
 
 	questions_json = [question.json() for question in questions]
 
