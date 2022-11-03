@@ -70,7 +70,9 @@ class RightAngleTriangle:
 					hidden_angles: list[str] = None,
 					side_a_label: str = None,
 					side_b_label: str = None,
-					side_c_label: str = None
+					side_c_label: str = None,
+					angle_a_label: str = None,
+					angle_b_label: str = None,
 	):
 		"""
 		Generates an image of the triangle and saves it in the static/question_images/ directory.
@@ -82,6 +84,8 @@ class RightAngleTriangle:
 		:param: side_a_label The label for side a (defaults to the length of side a and is only displayed if it isn't hidden)
 		:param: side_b_label The label for side b (defaults to the length of side b and is only displayed if it isn't hidden)
 		:param: side_c_label The label for side c (defaults to the length of side c and is only displayed if it isn't hidden)
+		:param: angle_a_label The label for angle A (defaults to the size of angle A and is only displayed if it isn't hidden)
+		:param: angle_b_label The label for angle B (defaults to the size of angle B and is only displayed if it isn't hidden)
 
 		:returns: The URL of the image
 		"""
@@ -166,7 +170,10 @@ class RightAngleTriangle:
 			text_pos = line_midpoint(point3, side_a_midpoint)
 			text_pos = line_midpoint(point3, text_pos)
 
-			draw.text(text_pos, str(self.angle_a) + "°", (0, 0, 0), font)
+			if not angle_a_label:
+				angle_a_label = str(self.angle_a) + "°"
+
+			draw.text(text_pos, angle_a_label, (0, 0, 0), font)
 
 		if "b" not in hidden_angles:
 			# A = sin^-1(b / c)
@@ -181,7 +188,10 @@ class RightAngleTriangle:
 			text_pos = line_midpoint(point1, side_b_midpoint)
 			text_pos = line_midpoint(point1, text_pos)
 
-			draw.text(text_pos, str(self.angle_b) + "°", (0, 0, 0), font)
+			if not angle_b_label:
+				angle_b_label = str(self.angle_b) + "°"
+
+			draw.text(text_pos, angle_b_label, (0, 0, 0), font)
 
 		# Draw the 90deg angle
 
