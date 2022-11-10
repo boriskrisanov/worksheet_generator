@@ -1,4 +1,4 @@
-import {Button, CircularProgress, TextField} from "@mui/material"
+import {Alert, Button, CircularProgress, TextField} from "@mui/material"
 import type {NextPage} from "next"
 import Head from "next/head"
 import TopicSelector from "../components/TopicSelector"
@@ -15,11 +15,15 @@ interface Props {
 const Home: NextPage<Props> = ({setQuestions}) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [numQuestionsError, setNumQuestionsError] = useState("")
+    const [topicsError, setTopicsError] = useState("")
 
     function submit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const form = document.getElementById("form") as HTMLFormElement
         let formData = new FormData(form)
+
+        // Parse form data
 
         let numQuestions;
         const topics: string[] = []
@@ -35,6 +39,31 @@ const Home: NextPage<Props> = ({setQuestions}) => {
                 topics.push(key)
             }
         }
+
+        // Validate
+
+        let valid = true
+
+        if (!numQuestions || numQuestions < 1 || numQuestions > 500) {
+            setNumQuestionsError("Enter a number between 1 and 500")
+            valid = false
+        } else {
+            setNumQuestionsError("")
+        }
+        if (topics.length == 0) {
+            setTopicsError("Select at least one topic")
+            valid = false
+        } else {
+            setTopicsError("")
+        }
+
+        if (!valid) {
+            return
+        }
+
+        // Make API request
+
+        setLoading(true)
 
         const topicsJSON = topics.map((topic) => {
             // @ts-ignore
@@ -82,10 +111,12 @@ const Home: NextPage<Props> = ({setQuestions}) => {
               variant="outlined"
               label="Number of questions"
               type="number"
+              error={numQuestionsError != ""}
+              helperText={numQuestionsError}
           />
         </span>
                 <span className={styles.generateButton}>
-          <Button type="submit" variant="contained" disabled={loading} onClick={() => setLoading(true)}>
+          <Button type="submit" variant="contained" disabled={loading}>
             Generate
               <CircularProgress style={{
                   position: "absolute",
@@ -93,6 +124,8 @@ const Home: NextPage<Props> = ({setQuestions}) => {
               }}/>
           </Button>
         </span>
+                {topicsError != "" && (
+                    <Alert severity="error" style={{marginTop: 10, width: "fit-content"}}>{topicsError}</Alert>)}
                 <TopicSelector
                     name="linear_equations"
                     topic="Linear equations"
