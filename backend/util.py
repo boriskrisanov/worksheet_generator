@@ -20,6 +20,9 @@ def randint_not_zero(min: int, max: int):
 
 def create_question_images_dir():
 	"""Creates the directory static/question_images/ if it doesn't exist"""
+	if not path.exists("static/"):
+		mkdir("static/")
+
 	if not path.exists("static/question_images/"):
 		mkdir("static/question_images/")
 

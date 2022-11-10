@@ -1,16 +1,14 @@
 from random import randint
 
-from sympy import symbols, simplify, pretty, parse_expr
+from sympy import simplify, parse_expr, latex
 
-from Question import Question
-from util import randint_not_zero
+from backend.Question import Question
+from backend.util import randint_not_zero
 
 
 def generate():
 	num_x_terms = randint(2, 3)
 	num_y_terms = randint(2, 3)
-
-	x, y = symbols("x y")
 
 	expression = ""
 
@@ -24,9 +22,11 @@ def generate():
 
 	expression = expression.rstrip(" +")
 
+	# TODO: Convert 1x to x
+	# TODO: Randomize the order of the x and y terms
+
 	expression = parse_expr(expression, evaluate=False)
 
-	answer = simplify(expression)
-	answer = pretty(answer)
+	answer = latex(simplify(expression))
 
-	return Question(f"Simplify {pretty(expression)}", answer)
+	return Question(f"\\text{{Simplify}} {latex(expression)}", answer)

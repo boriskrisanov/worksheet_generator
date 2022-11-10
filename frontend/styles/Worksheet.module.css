@@ -1,0 +1,9 @@
+.worksheet {
+  font-size: 18px;
+  padding: 10px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.answer {
+  color: green;
+}

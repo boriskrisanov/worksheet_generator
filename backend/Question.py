@@ -1,15 +1,17 @@
 class Question:
-	def __init__(self, question: str, answer: str, image_url: str = None) -> None:
+	def __init__(self, question: str, answer: str, image_url: str = None, image_alt: str = None) -> None:
 		self.question = question
 		self.answer = answer
 		self.image_url = image_url
+		self.image_alt = image_alt
 
 	def json(self):
 		if self.image_url:
 			return {
 				"question": self.question,
-				"question_image_url": self.image_url,
-				"answer": self.answer
+				"answer": self.answer,
+				"image_url": self.image_url,
+				"image_alt": self.image_alt
 			}
 
 		return {

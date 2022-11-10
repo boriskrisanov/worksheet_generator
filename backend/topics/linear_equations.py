@@ -1,7 +1,7 @@
-from sympy import symbols, Eq, pretty, Add, solveset, EmptySet, Complexes, Rational
+from sympy import symbols, Eq, Add, solveset, EmptySet, Complexes, Rational, latex
 
-from Question import Question
-from util import random_element, randint_not_zero
+from backend.Question import Question
+from backend.util import random_element, randint_not_zero
 
 
 def coefficients(difficulty: int):
@@ -63,6 +63,8 @@ def generate(difficulty=1) -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		equation = pretty(equation)
-		question = Question(str(equation), f"x = {solution.args[0]}")
+		equation = latex(equation)
+		question = f"{equation} \\\\ \\text{{Find the value of 𝑥.}}"
+		answer = "x = " + latex(solution.args[0])
+		question = Question(question, answer)
 		return question

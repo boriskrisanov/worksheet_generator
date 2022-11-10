@@ -1,9 +1,9 @@
 from random import randint
 
-from sympy import symbols, Eq, pretty, EmptySet, Complexes, expand
+from sympy import symbols, Eq, EmptySet, Complexes, expand, latex
 
-from Question import Question
-from util import randint_not_zero
+from backend.Question import Question
+from backend.util import randint_not_zero
 
 
 def coefficients():
@@ -38,6 +38,7 @@ def generate() -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		equation = pretty(equation)
-		question = Question(str(equation), f"{solution.args[0]}")
+		equation = latex(equation)
+		answer = latex(solution.args[0])
+		question = Question(str(equation), answer)
 		return question

@@ -1,9 +1,9 @@
 from random import randint
 
-from sympy import parse_expr, pretty, simplify, latex
+from sympy import parse_expr, simplify, latex
 
-from Question import Question
-from util import random_element
+from backend.Question import Question
+from backend.util import random_element
 
 
 def generate():
@@ -22,7 +22,7 @@ def generate():
 	question = parse_expr(expression, evaluate=False)
 	answer = simplify(question)
 
-	question = f"Simplify {pretty(question)}"
+	question = "\\text{Simplify} \\:" + latex(question)
 	answer = latex(answer)
 
 	return Question(question, answer)

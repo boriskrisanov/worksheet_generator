@@ -1,6 +1,6 @@
+from io import BytesIO
 from math import sqrt, asin, degrees
 from random import uniform, randint
-from uuid import uuid4
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -202,13 +202,9 @@ class RightAngleTriangle:
 		draw.text((width / 2, height - 270), "NOT TO SCALE", "black", font)
 
 		# Save image
-		# TODO: Check if this file already exists
+		buffer = BytesIO()
 
-		image_url = f"/question_images/{uuid4()}.png"
-		file_path = "static" + image_url
+		image.save(buffer, format="PNG")
+		buffer.seek(0)
 
-		image.save(file_path)
-
-		# TODO: Delete the image after some time
-
-		return image_url
+		return buffer

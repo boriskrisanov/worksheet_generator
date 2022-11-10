@@ -1,7 +1,7 @@
-from sympy import symbols, Eq, pretty, EmptySet, Complexes, solveset, Reals, simplify
+from sympy import symbols, Eq, EmptySet, Complexes, solveset, Reals, simplify, latex
 
-from Question import Question
-from util import randint_not_zero, random_element
+from backend.Question import Question
+from backend.util import randint_not_zero, random_element
 
 
 def coefficients():
@@ -47,8 +47,8 @@ def generate() -> Question:
 		elif num_solutions == 2:
 			solution1 = simplify(solution.args[0]).round(2)
 			solution2 = simplify(solution.args[1]).round(2)
-			answer = f"x = {solution1} or x = {solution2}"
+			answer = f"\\\\ x_1 = {solution1} \\\\ x_2 = {solution2}"
 
-		equation = pretty(equation)
-		question = Question(str(equation), answer)
+		equation = latex(equation)
+		question = Question(equation, answer)
 		return question

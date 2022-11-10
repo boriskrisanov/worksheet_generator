@@ -1,7 +1,7 @@
-from sympy import symbols, Eq, pretty, EmptySet, Complexes, linsolve
+from sympy import symbols, Eq, EmptySet, Complexes, linsolve, latex
 
-from Question import Question
-from util import random_element, randint_not_zero
+from backend.Question import Question
+from backend.util import random_element, randint_not_zero
 
 
 def coefficients():
@@ -57,6 +57,8 @@ def generate() -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		equation: str = pretty(equation1) + "\n" + pretty(equation2)
-		question = Question(str(equation), f"x = {solution.args[0][0]} \n y = {solution.args[0][1]}")
+		equation = latex(equation1) + "\\\\" + latex(equation2)
+		x = latex(solution.args[0][0])
+		y = latex(solution.args[0][1])
+		question = Question(equation + "\\\\ \\text{Find the value of 𝑥 and 𝑦.}", f"\\\\x = {x} \\\\ y = {y}")
 		return question
