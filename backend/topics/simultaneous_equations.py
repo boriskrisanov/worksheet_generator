@@ -57,7 +57,13 @@ def generate() -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		equation = latex(equation1) + "\\\\" + latex(equation2)
+		equation = f"""
+		\\begin {{cases}}
+		{latex(equation1)}
+		\\\\
+		{latex(equation2)}
+		\\end{{cases}}
+		"""
 		x = latex(solution.args[0][0])
 		y = latex(solution.args[0][1])
 		question = Question(equation + "\\\\ \\text{Find the value of 𝑥 and 𝑦.}", f"\\\\x = {x} \\\\ y = {y}")
