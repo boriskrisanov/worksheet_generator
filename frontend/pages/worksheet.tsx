@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styles from "../styles/Worksheet.module.css"
-import {FormControlLabel, Switch} from "@mui/material";
+import {Button, FormControlLabel, Switch} from "@mui/material";
 import Question, {TQuestion} from "../components/Question";
 import {useRouter} from "next/router";
 import {NextPage} from "next";
@@ -28,6 +28,7 @@ const Worksheet: NextPage<Props> = ({questions}) => {
 
     return (
         <div className={styles.worksheet}>
+            <span className={styles.hiddenOnPrint}>
             <FormControlLabel
                 control={<Switch onClick={() => setShowAnswers(!showAnswers)}/>}
                 label="Show answers"
@@ -36,6 +37,11 @@ const Worksheet: NextPage<Props> = ({questions}) => {
                 control={<Switch onClick={() => setLeaveSpace(!leaveSpace)}/>}
                 label="Leave space to show working"
             />
+            <Button variant="contained" onClick={() => window.print()}>
+                <img className={styles.printIcon} src="/icons/print.svg" alt="Printer icon"/>
+                Print
+            </Button>
+            </span>
             {questionElements}
         </div>
     )
