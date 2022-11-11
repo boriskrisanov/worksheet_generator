@@ -97,11 +97,11 @@ const Home: NextPage<Props> = ({setQuestions}) => {
     return (
         <div className={styles.home}>
             <Head>
-                <title>Worksheet generator</title>
+                <title>Worksheet Generator</title>
                 <meta name="viewport" content="initial-scale=1, width=device-width"/>
             </Head>
 
-            <h1>Worksheet generator</h1>
+            <h1>Worksheet Generator</h1>
 
             <form onSubmit={submit} id="form">
         <span className={styles.numberOfQuestions}>

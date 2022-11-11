@@ -4,6 +4,7 @@ import {Button, FormControlLabel, Switch} from "@mui/material";
 import Question, {TQuestion} from "../components/Question";
 import {useRouter} from "next/router";
 import {NextPage} from "next";
+import Head from "next/head";
 
 interface Props {
     questions: TQuestion[]
@@ -28,6 +29,11 @@ const Worksheet: NextPage<Props> = ({questions}) => {
 
     return (
         <div className={styles.worksheet}>
+            <Head>
+                {/*This route should not be indexed because its content depends on the form in index.tsx*/}
+                <meta name="robots" content="noindex"/>
+                <title>Worksheet Generator</title>
+            </Head>
             <span className={styles.hiddenOnPrint}>
             <FormControlLabel
                 control={<Switch onClick={() => setShowAnswers(!showAnswers)}/>}

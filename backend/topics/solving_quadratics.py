@@ -50,5 +50,5 @@ def generate() -> Question:
 			answer = f"\\\\ x_1 = {solution1} \\\\ x_2 = {solution2}"
 
 		equation = latex(equation)
-		question = Question(equation, answer)
+		question = Question(f"{equation} \\\\ \\text{{Find the value of 𝑥.}}", answer)
 		return question
