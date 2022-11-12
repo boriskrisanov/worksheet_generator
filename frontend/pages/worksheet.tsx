@@ -5,7 +5,6 @@ import Question, {TQuestion} from "../components/Question";
 import {useRouter} from "next/router";
 import {NextPage} from "next";
 import Head from "next/head";
-import Image from "next/image";
 
 interface Props {
     questions: TQuestion[]

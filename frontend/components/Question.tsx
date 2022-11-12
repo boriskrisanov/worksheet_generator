@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../styles/Worksheet.module.css";
 import katex from "katex";
 import "katex/dist/katex.css"
-import Image from "next/image";
 
 export interface TQuestion {
     question: string

@@ -125,6 +125,7 @@ class RightAngleTriangle:
 
 		# Display side lengths
 
+		# noinspection SpellCheckingInspection
 		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
 
 		side_a_midpoint = line_midpoint(point1, point2)
