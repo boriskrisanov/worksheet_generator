@@ -16,13 +16,13 @@ def generate():
 
 	match missing_side:
 		case "a":
-			side_a_label = "x"
+			side_a_label = "𝑥"
 			answer = triangle.side_a
 		case "b":
-			side_b_label = "x"
+			side_b_label = "𝑥"
 			answer = triangle.side_b
 		case "c":
-			side_c_label = "x"
+			side_c_label = "𝑥"
 			answer = triangle.side_c
 
 	image = "/question_images/right_angle_triangle" \

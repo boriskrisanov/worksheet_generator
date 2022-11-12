@@ -101,4 +101,4 @@ def right_angle_triangle_question_image():
 
 	image = triangle.create_image(hidden_sides, hidden_angles, side_a, side_b, side_c, angle_a, angle_b)
 
-	return send_file(image, "image/png")
+	return send_file(image, "image/webp")

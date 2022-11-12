@@ -5,6 +5,7 @@ import Question, {TQuestion} from "../components/Question";
 import {useRouter} from "next/router";
 import {NextPage} from "next";
 import Head from "next/head";
+import Image from "next/image";
 
 interface Props {
     questions: TQuestion[]
@@ -44,7 +45,7 @@ const Worksheet: NextPage<Props> = ({questions}) => {
                 label="Leave space to show working"
             />
             <Button variant="contained" onClick={() => window.print()}>
-                <img className={styles.printIcon} src="/icons/print.svg" alt="Printer icon"/>
+                <img width={30} src="/icons/print.svg" alt="Printer icon"/>
                 Print
             </Button>
             </span>

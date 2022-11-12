@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/Worksheet.module.css";
 import katex from "katex";
 import "katex/dist/katex.css"
+import Image from "next/image";
 
 export interface TQuestion {
     question: string
@@ -31,7 +32,7 @@ const Question: React.FC<Props> = ({question, questionNumber, showAnswer, leaveS
             {question.image_url && (
                 // TODO: Set this URL depending on the environment we're running in (dev or prod)
 
-                <img src={"http://localhost:5000" + question.image_url} alt={question.image_alt}/>
+                <img width={400} height={300} src={"http://localhost:5000" + question.image_url} alt={question.image_alt}/>
             )}
             <p hidden={!showAnswer} className={styles.answer}>
                 Answer: <span dangerouslySetInnerHTML={{

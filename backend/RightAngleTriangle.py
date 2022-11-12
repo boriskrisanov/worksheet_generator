@@ -102,14 +102,15 @@ class RightAngleTriangle:
 		self.angle_a = round(self.angle_a, 1)
 		self.angle_b = round(self.angle_b, 1)
 
-		width = 400
-		height = 300
+		scale_multiplier = 4
+		width = 400 * scale_multiplier
+		height = 300 * scale_multiplier
 		image = Image.new("RGB", (width, height), color="white")
 
 		# Draw triangle
 
-		margin_x = 60
-		margin_y = 30
+		margin_x = 60 * scale_multiplier
+		margin_y = 30 * scale_multiplier
 
 		triangle_length = randint(width // 2 + margin_x, width - margin_x)
 		triangle_height = randint(height // 2 + margin_y, height - margin_y)
@@ -120,24 +121,24 @@ class RightAngleTriangle:
 
 		points = [point1, point2, point3, point1]
 		draw = ImageDraw.Draw(image)
-		draw.line(points, width=4, fill="black")
+		draw.line(points, width=2 * scale_multiplier, fill="black")
 
 		# Display side lengths
 
-		font = ImageFont.truetype("arial.ttf", 18)
+		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
 
 		side_a_midpoint = line_midpoint(point1, point2)
 		side_b_midpoint = line_midpoint(point2, point3)
 		side_c_midpoint = line_midpoint(point3, point1)
 
-		side_a_midpoint = (side_a_midpoint[0] - 48, side_a_midpoint[1])
-		side_b_midpoint = (side_b_midpoint[0] - 20, side_b_midpoint[1] + 10)
-		side_c_midpoint = (side_c_midpoint[0], side_c_midpoint[1] - 40)
-
 		if "a" not in hidden_sides:
 			if not side_a_label:
 				side_a_label = str(self.side_a)
-			draw.text(side_a_midpoint, side_a_label, "black", font)
+
+			distance_from_edge = 10 * scale_multiplier + len(side_a_label) * 10 * scale_multiplier
+
+			pos = (side_a_midpoint[0] - distance_from_edge, side_a_midpoint[1])
+			draw.text(pos, side_a_label, "black", font)
 
 		if "b" not in hidden_sides:
 			if not side_b_label:
@@ -147,7 +148,9 @@ class RightAngleTriangle:
 		if "c" not in hidden_sides:
 			if not side_c_label:
 				side_c_label = str(self.side_c)
-			draw.text(side_c_midpoint, side_c_label, "black", font)
+
+			pos = (side_c_midpoint[0], side_c_midpoint[1] - 30 * scale_multiplier)
+			draw.text(pos, side_c_label, "black", font)
 
 		# Display angles
 
@@ -155,7 +158,7 @@ class RightAngleTriangle:
 		side_b_len = point3[0] - point2[0]
 		side_c_len = sqrt((side_a_len ** 2) + (side_b_len ** 2))
 
-		radius = 40
+		radius = 40 * scale_multiplier
 
 		if "a" not in hidden_angles:
 			# B = sin^-1(a / c)
@@ -165,14 +168,17 @@ class RightAngleTriangle:
 			start = (point3[0] - radius, point3[1] - radius)
 			end = (point3[0] + radius, point3[1] + radius)
 
-			draw.arc([start, end], 180, 180 + angle, (0, 0, 0), 2)
+			draw.arc([start, end], 180, 180 + angle, (0, 0, 0), scale_multiplier)
 
 			text_pos = line_midpoint(point3, side_a_midpoint)
 			text_pos = line_midpoint(point3, text_pos)
+			text_pos = (text_pos[0] - scale_multiplier, text_pos[1] - scale_multiplier)
 
 			if not angle_a_label:
 				angle_a_label = str(self.angle_a) + "°"
 
+			distance_from_angle = 6 * scale_multiplier + len(angle_a_label) * 6 * scale_multiplier
+			text_pos = (text_pos[0] - distance_from_angle, text_pos[1])
 			draw.text(text_pos, angle_a_label, (0, 0, 0), font)
 
 		if "b" not in hidden_angles:
@@ -183,7 +189,7 @@ class RightAngleTriangle:
 			start = (point1[0] - radius, point1[1] - radius)
 			end = (point1[0] + radius, point1[1] + radius)
 
-			draw.arc([start, end], 90 - angle, 90, (0, 0, 0), 2)
+			draw.arc([start, end], 90 - angle, 90, (0, 0, 0), scale_multiplier)
 
 			text_pos = line_midpoint(point1, side_b_midpoint)
 			text_pos = line_midpoint(point1, text_pos)
@@ -191,20 +197,21 @@ class RightAngleTriangle:
 			if not angle_b_label:
 				angle_b_label = str(self.angle_b) + "°"
 
+			text_pos = (text_pos[0] - 4 * len(angle_b_label) * scale_multiplier, text_pos[1])
 			draw.text(text_pos, angle_b_label, (0, 0, 0), font)
 
 		# Draw the 90deg angle
 
-		pos = (point2[0], point2[1], point2[0] + 30, point2[1] - 30)
-		draw.rectangle(pos, None, (0, 0, 0), 2)
+		pos = (point2[0], point2[1], point2[0] + 25 * scale_multiplier, point2[1] - 25 * scale_multiplier)
+		draw.rectangle(pos, None, (0, 0, 0), scale_multiplier)
 
 		# Add "NOT TO SCALE" text
-		draw.text((width / 2, height - 270), "NOT TO SCALE", "black", font)
+		draw.text((width / 2, height - 270 * scale_multiplier), "NOT TO SCALE", "black", font)
 
 		# Save image
 		buffer = BytesIO()
 
-		image.save(buffer, format="PNG")
+		image.save(buffer, format="WEBP", lossless=True)
 		buffer.seek(0)
 
 		return buffer

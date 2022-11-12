@@ -42,11 +42,11 @@ def generate():
 		angle_a_label = ""
 
 	if missing_side == "a":
-		side_a_label = "x"
+		side_a_label = "𝑥"
 	if missing_side == "b":
-		side_b_label = "x"
+		side_b_label = "𝑥"
 	if missing_side == "c":
-		side_c_label = "x"
+		side_c_label = "𝑥"
 
 	image = "/question_images/right_angle_triangle" \
 					f"?side_a={side_a_label}" \

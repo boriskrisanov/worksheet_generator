@@ -22,10 +22,10 @@ def generate():
 	match missing_angle:
 		case "a":
 			answer = triangle.angle_a
-			angle_a_label = "x"
+			angle_a_label = "𝑥"
 		case "b":
 			answer = triangle.angle_b
-			angle_b_label = "x"
+			angle_b_label = "𝑥"
 
 	side_a_label = ""
 	side_b_label = ""

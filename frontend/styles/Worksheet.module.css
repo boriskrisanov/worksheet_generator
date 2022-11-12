@@ -8,10 +8,6 @@
   color: green;
 }
 
-.printIcon {
-  width: 30px;
-}
-
 @media print {
   .hiddenOnPrint {
     display: none;

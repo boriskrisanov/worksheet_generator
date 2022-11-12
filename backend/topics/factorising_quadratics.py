@@ -40,5 +40,5 @@ def generate() -> Question:
 
 		equation = latex(equation)
 		answer = latex(solution.args[0])
-		question = Question(str(equation), answer)
+		question = Question(f"\\text{{Factorise}} \\: {equation}", answer)
 		return question
