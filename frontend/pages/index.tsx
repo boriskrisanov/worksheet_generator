@@ -1,18 +1,18 @@
-import {Alert, Button, CircularProgress, TextField} from "@mui/material"
-import type {NextPage} from "next"
+import { Alert, Button, CircularProgress, TextField } from "@mui/material"
+import type { NextPage } from "next"
 import Head from "next/head"
 import TopicSelector from "../components/TopicSelector"
 import styles from "../styles/Home.module.css"
-import {FormEvent, useState} from "react";
-import {TQuestion} from "../components/Question";
-import {useRouter} from "next/router";
+import { FormEvent, useState } from "react"
+import { TQuestion } from "../components/Question"
+import { useRouter } from "next/router"
 
 interface Props {
     questions: TQuestion[]
     setQuestions: (questions: TQuestion[]) => void
 }
 
-const Home: NextPage<Props> = ({setQuestions}) => {
+const Home: NextPage<Props> = ({ setQuestions }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [numQuestionsError, setNumQuestionsError] = useState("")
@@ -25,7 +25,7 @@ const Home: NextPage<Props> = ({setQuestions}) => {
 
         // Parse form data
 
-        let numQuestions;
+        let numQuestions
         const topics: string[] = []
         const difficulties = {}
         // @ts-ignore
@@ -69,9 +69,9 @@ const Home: NextPage<Props> = ({setQuestions}) => {
             // @ts-ignore
             const difficulty = difficulties[topic]
             if (!difficulty) {
-                return {name: topic}
+                return { name: topic }
             }
-            return {name: topic, difficulty: difficulty}
+            return { name: topic, difficulty: difficulty }
         })
 
         const body = JSON.stringify({
@@ -98,34 +98,34 @@ const Home: NextPage<Props> = ({setQuestions}) => {
         <div className={styles.home}>
             <Head>
                 <title>Worksheet Generator</title>
-                <meta name="viewport" content="initial-scale=1, width=device-width"/>
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
             </Head>
 
             <h1>Worksheet Generator</h1>
 
             <form onSubmit={submit} id="form">
-        <span className={styles.numberOfQuestions}>
-          <TextField
-              name="questions"
-              size="medium"
-              variant="outlined"
-              label="Number of questions"
-              type="number"
-              error={numQuestionsError != ""}
-              helperText={numQuestionsError}
-          />
-        </span>
+                <span className={styles.numberOfQuestions}>
+                    <TextField
+                        name="questions"
+                        size="medium"
+                        variant="outlined"
+                        label="Number of questions"
+                        type="number"
+                        error={numQuestionsError != ""}
+                        helperText={numQuestionsError}
+                    />
+                </span>
                 <span className={styles.generateButton}>
-          <Button type="submit" variant="contained" disabled={loading}>
-            Generate
-              <CircularProgress style={{
-                  position: "absolute",
-                  display: loading ? "block" : "none"
-              }}/>
-          </Button>
-        </span>
+                    <Button type="submit" variant="contained" disabled={loading}>
+                        Generate
+                        <CircularProgress style={{
+                            position: "absolute",
+                            display: loading ? "block" : "none"
+                        }} />
+                    </Button>
+                </span>
                 {topicsError != "" && (
-                    <Alert severity="error" style={{marginTop: 10, width: "fit-content"}}>{topicsError}</Alert>)}
+                    <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{topicsError}</Alert>)}
                 <TopicSelector
                     name="linear_equations"
                     topic="Linear equations"
@@ -162,6 +162,7 @@ const Home: NextPage<Props> = ({setQuestions}) => {
                 <TopicSelector
                     name="index_laws"
                     topic="Index laws"
+                    maxDifficulty={3}
                 />
             </form>
         </div>

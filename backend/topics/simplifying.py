@@ -2,8 +2,8 @@ from random import randint
 
 from sympy import simplify, parse_expr, latex
 
-from backend.Question import Question
-from backend.util import randint_not_zero
+from Question import Question
+from util import randint_not_zero
 
 
 def generate():

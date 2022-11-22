@@ -1,4 +1,3 @@
-from os import path, mkdir
 from random import randint
 
 
@@ -16,15 +15,6 @@ def randint_not_zero(min: int, max: int):
 	while n == 0:
 		n = randint(min, max)
 	return n
-
-
-def create_question_images_dir():
-	"""Creates the directory static/question_images/ if it doesn't exist"""
-	if not path.exists("static/"):
-		mkdir("static/")
-
-	if not path.exists("static/question_images/"):
-		mkdir("static/question_images/")
 
 
 def line_midpoint(point1: tuple[float, float], point2: tuple[float, float]):

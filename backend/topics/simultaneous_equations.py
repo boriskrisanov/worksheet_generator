@@ -1,7 +1,7 @@
 from sympy import symbols, Eq, EmptySet, Complexes, linsolve, latex
 
-from backend.Question import Question
-from backend.util import random_element, randint_not_zero
+from Question import Question
+from util import random_element, randint_not_zero
 
 
 def coefficients():

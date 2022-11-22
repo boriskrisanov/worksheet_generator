@@ -2,8 +2,8 @@ from random import randint
 
 from sympy import symbols, Eq, EmptySet, Complexes, expand, latex
 
-from backend.Question import Question
-from backend.util import randint_not_zero
+from Question import Question
+from util import randint_not_zero
 
 
 def coefficients():

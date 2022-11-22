@@ -1,6 +1,6 @@
-from backend.Question import Question
-from backend.RightAngleTriangle import RightAngleTriangle
-from backend.util import random_element
+from Question import Question
+from RightAngleTriangle import RightAngleTriangle
+from util import random_element
 
 
 def generate():
@@ -46,4 +46,4 @@ def generate():
 					f"&angle_a={angle_a_label}" \
 					f"&angle_b={angle_b_label}"
 
-	return Question("\\text{Find 𝑥.}", f"x = {round(answer, 1)}", image)
+	return Question("\\text{Find the value of 𝑥.}", f"x = {round(answer, 1)}", image)

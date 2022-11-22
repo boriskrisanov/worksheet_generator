@@ -2,15 +2,13 @@ from flask import Flask, request, send_file
 from flask_cors import CORS
 
 from Question import Question
-from backend.RightAngleTriangle import RightAngleTriangle
+from RightAngleTriangle import RightAngleTriangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
 	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws
-from util import random_element, create_question_images_dir
+from util import random_element
 
 app = Flask(__name__)
 CORS(app)
-
-create_question_images_dir()
 
 
 @app.route("/worksheet", methods=["POST"])
@@ -64,7 +62,7 @@ def index():
 			case "simplifying":
 				questions.append(simplifying.generate())
 			case "index_laws":
-				questions.append(index_laws.generate())
+				questions.append(index_laws.generate(difficulty))
 
 	questions_json = [question.json() for question in questions]
 

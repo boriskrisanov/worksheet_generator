@@ -1,6 +1,6 @@
-from backend.Question import Question
-from backend.RightAngleTriangle import RightAngleTriangle
-from backend.util import random_element
+from Question import Question
+from RightAngleTriangle import RightAngleTriangle
+from util import random_element
 
 
 def generate():
