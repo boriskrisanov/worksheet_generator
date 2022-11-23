@@ -75,7 +75,7 @@ class RightAngleTriangle:
 					angle_b_label: str = None,
 	):
 		"""
-		Generates an image of the triangle and saves it in the static/question_images/ directory.
+		Generates a WebP image of the triangle and returns a BytesIO object containing it.
 
 		The actual side length is generated randomly, which is why the "NOT TO SCALE" text is added.
 
