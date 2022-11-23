@@ -18,7 +18,7 @@ def generate():
 	missing_side = random_element(sides)
 	sides.remove(missing_side)
 
-	answer = None
+	answer = 0.0
 
 	match missing_side:
 		case "a":
@@ -31,9 +31,9 @@ def generate():
 	angle_a_label = angle_b_label = side_a_label = side_b_label = side_c_label = ""
 
 	if known_angle == "a":
-		angle_a_label = round(triangle.angle_a, 1)
+		angle_a_label = str(round(triangle.angle_a, 1))
 	if known_angle == "b":
-		angle_b_label = round(triangle.angle_b, 1)
+		angle_b_label = str(round(triangle.angle_b, 1))
 
 	if missing_side == "a":
 		side_a_label = "𝑥"
@@ -44,11 +44,11 @@ def generate():
 
 	match known_side:
 		case "a":
-			side_a_label = round(triangle.side_a, 1)
+			side_a_label = str(round(triangle.side_a, 1))
 		case "b":
-			side_b_label = round(triangle.side_b, 1)
+			side_b_label = str(round(triangle.side_b, 1))
 		case "c":
-			side_c_label = round(triangle.side_c, 1)
+			side_c_label = str(round(triangle.side_c, 1))
 
 	image = "/question_images/right_angle_triangle" \
 					f"?side_a={side_a_label}" \

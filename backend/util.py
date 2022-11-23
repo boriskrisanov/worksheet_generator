@@ -1,4 +1,7 @@
+from io import BytesIO
 from random import randint
+
+from PIL.Image import Image
 
 
 def random_element(array: list):
@@ -22,3 +25,16 @@ def line_midpoint(point1: tuple[float, float], point2: tuple[float, float]):
 	x = (point1[0] + point2[0]) / 2
 	y = (point1[1] + point2[1]) / 2
 	return x, y
+
+
+def save_pillow_image(image: Image):
+	"""
+	Returns a BytesIO object with the image encoded as WebP
+	"""
+
+	buffer = BytesIO()
+
+	image.save(buffer, format="WEBP", lossless=True)
+	buffer.seek(0)
+
+	return buffer

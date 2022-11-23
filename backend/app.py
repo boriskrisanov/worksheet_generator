@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file
 from flask_cors import CORS
 
+from Circle import Circle
 from Question import Question
 from RightAngleTriangle import RightAngleTriangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
@@ -15,8 +16,8 @@ CORS(app)
 def index():
 	# Get number of questions
 	try:
-		num_questions = request.json["questions"]
-		num_questions = int(num_questions)
+		num_questions_str: str = request.json["questions"]  # type: ignore
+		num_questions = int(num_questions_str)
 		assert num_questions >= 1
 		assert num_questions <= 500
 	except (ValueError, AssertionError, KeyError):
@@ -24,7 +25,7 @@ def index():
 
 	# Get topics
 	try:
-		topics = request.json["topics"]
+		topics = request.json["topics"]  # type: ignore
 	except KeyError:
 		return "Bad request: select at least one topic", 400
 
@@ -98,5 +99,23 @@ def right_angle_triangle_question_image():
 	triangle = RightAngleTriangle()
 
 	image = triangle.create_image(hidden_sides, hidden_angles, side_a, side_b, side_c, angle_a, angle_b)
+
+	return send_file(image, "image/webp")
+
+
+@app.route("/question_images/circle", methods=["GET"])
+def circle_question_image():
+	show_diameter = show_radius = False
+
+	diameter = request.args.get("diameter")
+	if diameter:
+		show_diameter = True
+
+	radius = request.args.get("radius")
+	if radius:
+		show_radius = True
+
+	circle = Circle()
+	image = circle.create_image(show_diameter, show_radius, diameter, radius)
 
 	return send_file(image, "image/webp")

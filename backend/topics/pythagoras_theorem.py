@@ -8,11 +8,11 @@ def generate():
 
 	missing_side = random_element(["a", "b", "c"])
 
-	side_a_label = round(triangle.side_a, 1)
-	side_b_label = round(triangle.side_b, 1)
-	side_c_label = round(triangle.side_c, 1)
+	side_a_label = str(round(triangle.side_a, 1))
+	side_b_label = str(round(triangle.side_b, 1))
+	side_c_label = str(round(triangle.side_c, 1))
 
-	answer = None
+	answer = 0.0
 
 	match missing_side:
 		case "a":

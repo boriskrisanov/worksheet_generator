@@ -1,0 +1,7 @@
+sympy==1.11.1
+Flask==2.2.2
+Pillow==9.2.0
+Flask-Cors==3.0.10
+types-Pillow==9.3.0.1
+types-Flask-Cors==3.0.10
+mypy==0.991

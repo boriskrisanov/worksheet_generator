@@ -1,10 +1,10 @@
-from io import BytesIO
 from math import sqrt, asin, degrees
 from random import uniform, randint
+from typing import Union
 
 from PIL import Image, ImageDraw, ImageFont
 
-from util import line_midpoint
+from util import line_midpoint, save_pillow_image
 
 
 class RightAngleTriangle:
@@ -66,13 +66,13 @@ class RightAngleTriangle:
 
 	def create_image(
 					self,
-					hidden_sides: list[str] = None,
-					hidden_angles: list[str] = None,
-					side_a_label: str = None,
-					side_b_label: str = None,
-					side_c_label: str = None,
-					angle_a_label: str = None,
-					angle_b_label: str = None,
+					hidden_sides: Union[list[str], None] = None,
+					hidden_angles: Union[list[str], None] = None,
+					side_a_label: Union[str, None] = None,
+					side_b_label: Union[str, None] = None,
+					side_c_label: Union[str, None] = None,
+					angle_a_label: Union[str, None] = None,
+					angle_b_label: Union[str, None] = None,
 	):
 		"""
 		Generates a WebP image of the triangle and returns a BytesIO object containing it.
@@ -203,16 +203,11 @@ class RightAngleTriangle:
 
 		# Draw the 90deg angle
 
-		pos = (point2[0], point2[1], point2[0] + 25 * scale_multiplier, point2[1] - 25 * scale_multiplier)
-		draw.rectangle(pos, None, (0, 0, 0), scale_multiplier)
+		pos2 = (point2[0], point2[1], point2[0] + 25 * scale_multiplier, point2[1] - 25 * scale_multiplier)
+		draw.rectangle(pos2, None, (0, 0, 0), scale_multiplier)
 
 		# Add "NOT TO SCALE" text
 		draw.text((width / 2, height - 270 * scale_multiplier), "NOT TO SCALE", "black", font)
 
 		# Save image
-		buffer = BytesIO()
-
-		image.save(buffer, format="WEBP", lossless=True)
-		buffer.seek(0)
-
-		return buffer
+		return save_pillow_image(image)

@@ -1,11 +1,11 @@
-import { Alert, Button, CircularProgress, TextField } from "@mui/material"
-import type { NextPage } from "next"
+import {Alert, Button, CircularProgress, TextField} from "@mui/material"
+import type {NextPage} from "next"
 import Head from "next/head"
 import TopicSelector from "../components/TopicSelector"
 import styles from "../styles/Home.module.css"
-import { FormEvent, useState } from "react"
-import { TQuestion } from "../components/Question"
-import { useRouter } from "next/router"
+import {FormEvent, useState} from "react"
+import {TQuestion} from "../components/Question"
+import {useRouter} from "next/router"
 
 interface Props {
     questions: TQuestion[]
@@ -89,7 +89,7 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
         }).then(async res => {
             const json = await res.json()
             setQuestions(json.questions)
-            await router.push("/worksheet")
+            router.push("/worksheet")
         })
 
     }

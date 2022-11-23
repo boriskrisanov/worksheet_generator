@@ -63,8 +63,8 @@ def generate(difficulty=1) -> Question:
 			# No solutions, generate a new equation
 			continue
 
-		equation = latex(equation)
-		question = f"{equation} \\\\ \\text{{Find the value of 𝑥.}}"
+		equation_str = latex(equation)
+		question_str = f"{equation_str} \\\\ \\text{{Find the value of 𝑥.}}"
 		answer = "x = " + latex(solution.args[0])
-		question = Question(question, answer)
+		question = Question(question_str, answer)
 		return question
