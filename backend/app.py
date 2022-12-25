@@ -5,7 +5,8 @@ from Circle import Circle
 from Question import Question
 from RightAngleTriangle import RightAngleTriangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
-	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws, circles
+	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws, circles, \
+	expanding_brackets
 from util import random_element
 
 app = Flask(__name__)
@@ -66,6 +67,8 @@ def index():
 				questions.append(index_laws.generate(difficulty))
 			case "circles":
 				questions.append(circles.generate())
+			case "expanding_brackets":
+				questions.append(expanding_brackets.generate(difficulty))
 
 	questions_json = [question.json() for question in questions]
 
