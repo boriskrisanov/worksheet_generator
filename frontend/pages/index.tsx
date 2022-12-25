@@ -164,6 +164,10 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                     topic="Index laws"
                     maxDifficulty={3}
                 />
+                <TopicSelector
+                    name="circles"
+                    topic="Circles"
+                />
             </form>
         </div>
     )

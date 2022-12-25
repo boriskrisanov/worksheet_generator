@@ -2,9 +2,10 @@ from math import pi
 from random import randint
 from typing import Union
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageFont
+from PIL.ImageDraw import ImageDraw
 
-from util import save_pillow_image, line_midpoint
+from util import save_pillow_image, create_circle_image
 
 
 class Circle:
@@ -13,9 +14,18 @@ class Circle:
 		Generates a circle with a random radius
 		"""
 		self.radius = randint(min_radius, max_radius)
-		self.diameter = self.radius ** 2
+		self.diameter = self.radius * 2
 		self.area = pi * self.radius ** 2
 		self.circumference = pi * self.diameter
+
+	def __str__(self):
+		return f""" Circle(
+						radius = {self.radius}
+						diameter = {self.diameter}
+						area = {self.area}
+						circumference = {self.circumference}
+					)
+					"""
 
 	def create_image(
 					self,
@@ -42,38 +52,53 @@ class Circle:
 		If this is None, the actual radius of the circle will be used.
 		"""
 
+		# This function works by first drawing the circle on a transparent image and then overlaying it on a white image
+		# with a margin and random offset applied. This is easier than drawing the circle directly on the final image because
+		# the final image may not have equal width and height, and we would need to apply the random offsets to the radius
+		# line, both of which make the code and calculations more confusing.
+
+		# Everything position related, including the dimensions of the image, will be multiplied by this. This allows the
+		# resolution/dimensions of the image to be changed without changing how the circle looks.
 		scale_multiplier = 4
+
+		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
+
+		circle_size = randint(150, 250)
+
+		if diameter_label is None:
+			diameter_label = str(round(self.diameter, 2))
+
+		if radius_label is None:
+			radius_label = str(round(self.radius, 2))
+
+		circle_image = create_circle_image(
+			scale_multiplier,
+			circle_size,
+			font,
+			diameter_label,
+			radius_label,
+			show_diameter,
+			show_radius,
+		)
 
 		width = 400 * scale_multiplier
 		height = 300 * scale_multiplier
 
-		image = Image.new("RGB", (width, height), color="white")
-		draw = ImageDraw.Draw(image)
-		# noinspection SpellCheckingInspection
-		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
+		final_image = Image.new("RGBA", (width, height), color="white")
+		final_image_draw = ImageDraw(final_image)
 
-		# Draw circle
-		random_offset = randint(0, 20 * scale_multiplier)
+		# Overlay the circle over the final image
 		margin = 20 * scale_multiplier
-		start = (margin + random_offset, margin + random_offset)
-		end = ((width - 100 * scale_multiplier) - margin - random_offset, height - margin - random_offset)
-		pos = (start, end)
-		center = line_midpoint((start[0], start[1]), (end[0], end[1]))
-		draw.arc(pos, 0, 360, "black", 2 * scale_multiplier)
+
+		random_offset_x = randint(0, 30 * scale_multiplier)
+		random_offset_y = randint(0, 30 * scale_multiplier)
+
+		circle_pos = margin + random_offset_x, margin + random_offset_y
+
+		final_image.paste(circle_image, circle_pos, circle_image)
 
 		# Add "NOT TO SCALE" text
-		draw.text((width / 2 + 60 * scale_multiplier, height - 290 * scale_multiplier), "NOT TO SCALE", "black", font)
+		final_image_draw.text((width / 2 + 60 * scale_multiplier, height - 290 * scale_multiplier), "NOT TO SCALE", "black",
+													font)
 
-		# Draw radius
-		if show_radius and not show_diameter:
-			if not radius_label:
-				radius_label = str(round(self.radius, 2))
-
-			top_right = end[0], start[0]
-			line_end = line_midpoint(top_right, end)
-			draw.line((center, line_end), "black", 2 * scale_multiplier)
-
-			label_pos = line_midpoint(center, line_end)
-
-		# Save image
-		return save_pillow_image(image)
+		return save_pillow_image(final_image)
