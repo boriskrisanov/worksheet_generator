@@ -12,7 +12,7 @@ T = TypeVar("T")
 def random_element(array: list[T]) -> T:
 	"""Returns a random element from the array"""
 	if not len(array):
-		return None
+		raise Exception("Empty array")
 	index = randint(0, len(array) - 1)
 	return array[index]
 
