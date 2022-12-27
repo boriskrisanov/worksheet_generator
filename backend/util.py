@@ -1,12 +1,15 @@
 from io import BytesIO
 from random import randint, uniform
+from typing import TypeVar
 
 from PIL import ImageDraw, Image
 from PIL.ImageFont import FreeTypeFont
 from sympy import symbols, Eq, solve
 
+T = TypeVar("T")
 
-def random_element(array: list):
+
+def random_element(array: list[T]) -> T:
 	"""Returns a random element from the array"""
 	if not len(array):
 		return None
