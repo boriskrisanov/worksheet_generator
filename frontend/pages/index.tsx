@@ -136,8 +136,14 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                     topic="Simultaneous Equations"
                 />
                 <TopicSelector
-                    name="factorising_quadratics"
-                    topic="Factorising quadratics"
+                    name="expanding_brackets"
+                    topic="Expanding brackets"
+                    maxDifficulty={3}
+                />
+                <TopicSelector
+                    name="inequalities"
+                    topic="Inequalities"
+                    maxDifficulty={3}
                 />
                 <TopicSelector
                     name="solving_quadratics"

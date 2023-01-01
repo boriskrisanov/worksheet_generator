@@ -1,9 +1,14 @@
-from typing import Union
+from typing import Optional
 
 
 class Question:
-	def __init__(self, question: str, answer: str, image_url: Union[str, None] = None,
-							 image_alt: Union[str, None] = None) -> None:
+	def __init__(
+					self,
+					question: str,
+					answer: str,
+					image_url: Optional[str] = None,
+					image_alt: Optional[str] = None
+	) -> None:
 		self.question = question
 		self.answer = answer
 		self.image_url = image_url
