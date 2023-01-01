@@ -131,6 +131,13 @@ class Triangle:
 		side_b_midpoint = util.line_midpoint(p2, p3)
 		side_c_midpoint = util.line_midpoint(p3, p1)
 
+		if side_a_label is None:
+			side_a_label = ""
+		if side_b_label is None:
+			side_b_label = ""
+		if side_c_label is None:
+			side_c_label = ""
+
 		draw.text(side_a_midpoint, side_a_label, "black", font)
 		draw.text(side_b_midpoint, side_b_label, "black", font)
 		draw.text(side_c_midpoint, side_c_label, "black", font)
