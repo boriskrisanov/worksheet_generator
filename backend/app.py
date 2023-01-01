@@ -4,6 +4,7 @@ from flask_cors import CORS
 from Circle import Circle
 from Question import Question
 from RightAngleTriangle import RightAngleTriangle
+from Triangle import Triangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
 	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws, circles, \
 	expanding_brackets
@@ -104,6 +105,34 @@ def right_angle_triangle_question_image():
 	triangle = RightAngleTriangle()
 
 	image = triangle.create_image(hidden_sides, hidden_angles, side_a, side_b, side_c, angle_a, angle_b)
+
+	return send_file(image, "image/webp")
+
+
+@app.route("/question_images/triangle", methods=["GET"])
+def triangle_question_image():
+	side_a_label = request.args.get("side_a")
+	side_b_label = request.args.get("side_b")
+	side_c_label = request.args.get("side_c")
+
+	angle_a_label = request.args.get("angle_a")
+	angle_b_label = request.args.get("angle_b")
+	angle_c_label = request.args.get("angle_c")
+
+	triangle = Triangle()
+	image = triangle.create_image(
+		side_a_label,
+		side_b_label,
+		side_c_label,
+
+		angle_a_label,
+		angle_b_label,
+		angle_c_label,
+
+		show_angle_a=angle_a_label is not None,
+		show_angle_b=angle_b_label is not None,
+		show_angle_c=angle_c_label is not None
+	)
 
 	return send_file(image, "image/webp")
 
