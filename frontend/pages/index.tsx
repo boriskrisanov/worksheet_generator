@@ -16,6 +16,7 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [numQuestionsError, setNumQuestionsError] = useState("")
+    const [serverErrorMessage, setServerErrorMessage] = useState("")
     const [topicsError, setTopicsError] = useState("")
 
     function submit(e: FormEvent<HTMLFormElement>) {
@@ -87,6 +88,14 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                 "Content-Type": "application/json"
             }
         }).then(async res => {
+            if (res.status == 500) {
+                // Internal server error
+                // TODO: Write a better error message
+                setServerErrorMessage(`Sorry, something went wrong. Please try again later. (${res.statusText})`)
+                setLoading(false)
+                return
+            }
+
             const json = await res.json()
             setQuestions(json.questions)
             router.push("/worksheet")
@@ -124,8 +133,8 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                         }} />
                     </Button>
                 </span>
-                {topicsError != "" && (
-                    <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{topicsError}</Alert>)}
+                {topicsError != "" && <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{topicsError}</Alert>}
+                {serverErrorMessage != "" && <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{serverErrorMessage}</Alert>}
                 <TopicSelector
                     name="linear_equations"
                     topic="Linear equations"
