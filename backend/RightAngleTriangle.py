@@ -36,6 +36,7 @@ class RightAngleTriangle:
 	def get_opposite(self, angle: str):
 		"""
 		Returns the length of the side opposite to the angle
+
 		:param: angle "a", "b", or "c"
 		"""
 		match angle:
@@ -51,6 +52,7 @@ class RightAngleTriangle:
 	def get_adjacent(self, angle: str):
 		"""
 		Returns the length of the side adjacent to the angle
+
 		:param: angle "a", "b", or "c"
 		"""
 		opp = self.get_opposite(angle)

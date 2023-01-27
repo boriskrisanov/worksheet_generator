@@ -97,6 +97,7 @@ class Triangle:
 
 		image = image = Image.new("RGB", (width, height), color="white")
 		draw = ImageDraw(image)
+		# noinspection SpellCheckingInspection
 		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
 
 		region_layouts = [

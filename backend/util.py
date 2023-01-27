@@ -17,7 +17,7 @@ def random_element(array: list[T]) -> T:
 	return array[index]
 
 
-def randint_not_zero(min: int, max: int):
+def randint_not_zero(min: int, max: int) -> int:
 	"""Returns a random non-zero integer >= min and <= max"""
 	n = randint(min, max)
 	while n == 0:

@@ -20,13 +20,14 @@ def coefficients(difficulty: int):
 	b = randint_not_zero(min, max)
 	c = randint_not_zero(min, max)
 	d = randint_not_zero(min, max)
+	e = randint_not_zero(min, max)
 
-	return a, b, c, d
+	return a, b, c, d, e
 
 
 def formats(difficulty: int):
-	a, b, c, d, x = symbols("a b c d x")
-	a, b, c, d = coefficients(difficulty)
+	a, b, c, d, e, x = symbols("a b c d e x")
+	a, b, c, d, e = coefficients(difficulty)
 
 	match difficulty:
 		case 1:
@@ -42,6 +43,7 @@ def formats(difficulty: int):
 				# ax = bx + c
 				Eq(a * x, b * x + c)
 			]
+
 		case 2:
 			return [
 				# ax + bx = cx + d
@@ -50,6 +52,12 @@ def formats(difficulty: int):
 				Eq(a * x, Add(b * x, c * x, evaluate=False) + d),
 				# ax + b/d = cx
 				Eq(a * x + Rational(b, d), c * x)
+			]
+
+		case 3:
+			return [
+				# ax + b / cx = dx + e
+				Eq(a * x + b / (c * x), d * x + e)
 			]
 
 

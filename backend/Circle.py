@@ -61,6 +61,7 @@ class Circle:
 		# resolution/dimensions of the image to be changed without changing how the circle looks.
 		scale_multiplier = 4
 
+		# noinspection SpellCheckingInspection
 		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
 
 		circle_size = randint(150, 250)
@@ -98,7 +99,6 @@ class Circle:
 		final_image.paste(circle_image, circle_pos, circle_image)
 
 		# Add "NOT TO SCALE" text
-		final_image_draw.text((width / 2 + 60 * scale_multiplier, height - 290 * scale_multiplier), "NOT TO SCALE", "black",
-													font)
+		final_image_draw.text((width / 2 + 60 * scale_multiplier, height - 290 * scale_multiplier), "NOT TO SCALE", "black", font)
 
 		return save_pillow_image(final_image)
