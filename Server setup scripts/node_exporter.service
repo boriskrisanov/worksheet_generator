@@ -1,0 +1,13 @@
+[Unit]
+Description=Node exporter
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=boris
+ExecStart=/home/boris/node_exporter/node_exporter
+WorkingDirectory=/home/boris/node_exporter
+
+[Install]
+WantedBy=multi-user.target

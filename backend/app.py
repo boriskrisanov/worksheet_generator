@@ -21,9 +21,9 @@ def index():
 		num_questions_str: str = request.json["questions"]  # type: ignore
 		num_questions = int(num_questions_str)
 		assert num_questions >= 1
-		assert num_questions <= 500
+		assert num_questions <= 100
 	except (ValueError, AssertionError, KeyError):
-		return "Bad request: questions must be an integer between 1 and 500", 400
+		return "Bad request: questions must be an integer between 1 and 100", 400
 
 	# Get topics
 	try:

@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=boris
+ExecStart=/home/boris/prometheus/prometheus
+WorkingDirectory=/home/boris/prometheus
+
+[Install]
+WantedBy=multi-user.target

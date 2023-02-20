@@ -1,4 +1,5 @@
-from sympy import symbols, Eq, Add, solveset, EmptySet, Complexes, Rational, latex
+import sympy
+from sympy import symbols, Eq, Add, EmptySet, Rational, latex, solveset
 
 from Question import Question
 from util import random_element, randint_not_zero
@@ -21,13 +22,16 @@ def coefficients(difficulty: int):
 	c = randint_not_zero(min, max)
 	d = randint_not_zero(min, max)
 	e = randint_not_zero(min, max)
+	f = randint_not_zero(min, max)
+	g = randint_not_zero(min, max)
+	h = randint_not_zero(min, max)
 
-	return a, b, c, d, e
+	return a, b, c, d, e, f, g, h
 
 
 def formats(difficulty: int):
-	a, b, c, d, e, x = symbols("a b c d e x")
-	a, b, c, d, e = coefficients(difficulty)
+	x = symbols("x")
+	a, b, c, d, e, f, g, h = coefficients(difficulty)
 
 	match difficulty:
 		case 1:
@@ -56,8 +60,11 @@ def formats(difficulty: int):
 
 		case 3:
 			return [
-				# ax + b / cx = dx + e
-				Eq(a * x + b / (c * x), d * x + e)
+				# (ax + b) / (cx) = dx + e
+				Eq(a * x + b / (c * x), d * x + e),
+				# (ax / b) + (cx / d) = (ex / f) + g
+				Eq(Add(((a * x) / b), ((c * x) / d), evaluate=False), Add(((e * x) / f), g), evaluate=False)
+				# (ax / b) + (cx / d) = (ex / f) + g
 			]
 
 
@@ -65,14 +72,15 @@ def generate(difficulty=1) -> Question:
 	while True:
 		# Keep generating equations until the equation has a solution
 		equation: Eq = random_element(formats(difficulty))
-		solution = solveset(equation)
+		solution = solveset(equation, domain=sympy.Reals)
 
-		if solution == EmptySet or solution == Complexes:
+		if solution == EmptySet:
 			# No solutions, generate a new equation
 			continue
 
+		answer = "x = " + latex(solution.args[0])
+
 		equation_str = latex(equation)
 		question_str = f"{equation_str} \\\\ \\text{{Find the value of 𝑥.}}"
-		answer = "x = " + latex(solution.args[0])
 		question = Question(question_str, answer)
 		return question

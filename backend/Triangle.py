@@ -64,6 +64,7 @@ class Triangle:
 					show_angle_b=False,
 					show_angle_c=False,
 	) -> BytesIO:
+		# TODO: Fix angle arcs sometimes not being draw correctly
 		"""
 		:param side_a_label: What side A will be labeled as. If this is None, the actual length of the side will be used. To
 		not display anything, set this to an empty string.
@@ -104,8 +105,8 @@ class Triangle:
 			# (x1, y1, x2, y2)
 			[
 				(width / 4, 0, width / 4 + 200 * scale_multiplier, 100 * scale_multiplier),
-				(0, height * 0.65, 150 * scale_multiplier, height),
-				(0.65 * width, 0.65 * height, width, height)
+				(0, height * 0.65, 150 * scale_multiplier, height - 10 * scale_multiplier),
+				(0.65 * width, 0.65 * height, width - 10 * scale_multiplier, height - 10 * scale_multiplier)
 			]
 		]
 
@@ -148,25 +149,37 @@ class Triangle:
 		angle_arc_radius = 40 * scale_multiplier
 
 		side_a_line = Line(p1, p2)
-		side_b_line = Line(p2, p3)
+		side_b_line = Line(p3, p2)
 		side_c_line = Line(p3, p1)
 
 		if show_angle_a:
-			angle_c = side_a_line.angle_between(side_b_line)
-			angle_b = side_a_line.angle_between(side_c_line)
-
-			print(side_a_line, side_b_line, side_c_line)
-
 			p3_horizontal = Line(p3, (width, p3[1]))
+			# draw.line((p3, p3_horizontal.p2.args[0], p3[1]), "blue", 4)  # debug
 			start_angle = p3_horizontal.angle_between(side_b_line)
-			start_angle = degrees(start_angle)
+			start_angle = degrees(float(start_angle))
 
-			arc_angle = degrees(p3_horizontal.angle_between(side_c_line))
+			# draw.text(p1, "p1", "red", font)  # debug
+			# draw.text(p2, "p2", "red", font)  # debug
+			# draw.text(p3, "p3", "red", font)  # debug
+
+			arc_angle = 360 - degrees(p3_horizontal.angle_between(side_c_line))
 
 			start = (p3[0] - angle_arc_radius, p3[1] - angle_arc_radius)
 			end = (p3[0] + angle_arc_radius, p3[1] + angle_arc_radius)
 
-			draw.arc([start, end], 0, start_angle, "black", scale_multiplier)
+			# We always need the clockwise angle between p3_horizontal and side B because that's what ImageDraw.arc() uses.
+			# If p2 is above p3, angle_between() returns the counterclockwise angle because it's smaller,
+			# so we subtract it from 360 to get the clockwise angle if that's the case.
+			if p2[1] < p3[1]:
+				start_angle = 360 - start_angle
+
+			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
+			# draw.arc([start, end], 0, start_angle, "orange", scale_multiplier)  # debug
+
+			# TODO: Improve text positioning
+			text_pos = util.line_midpoint(p3, util.line_midpoint(p1, p2))
+			text_pos = text_pos[0] + 10 * scale_multiplier, text_pos[1] + 10 * scale_multiplier
+			draw.text(text_pos, angle_a_label, "black", font)
 
 		if show_angle_b:
 			p1_horizontal = Line(p1, (width, p1[1]))
@@ -181,6 +194,35 @@ class Triangle:
 			# draw.line((p1, (width, p1[1])), "black", 2 * scale_multiplier)
 
 			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
-		# draw.rectangle((start, end), None, "red")
+			# draw.rectangle((start, end), None, "red")
+
+			# TODO: Improve text positioning
+			text_pos = util.line_midpoint(p1, util.line_midpoint(p2, p3))
+			text_pos = text_pos[0] - 10 * scale_multiplier, text_pos[1] - 30 * scale_multiplier
+			draw.text(text_pos, angle_b_label, "black", font)
+
+		if show_angle_c:
+			p2_horizontal = Line(p2, (width, p2[1]))
+			# draw.line((p3, p3_horizontal.p2.args[0], p3[1]), "blue", 4)  # debug
+			start_angle = p2_horizontal.angle_between(side_a_line)
+			start_angle = degrees(float(start_angle)) + 180
+
+			arc_angle = degrees(side_a_line.angle_between(side_b_line))
+
+			if p2[1] > p3[1]:
+				arc_angle -= degrees(side_a_line.smallest_angle_between(p2_horizontal))
+			if p2[1] < p3[1]:
+				arc_angle -= degrees(side_a_line.smallest_angle_between(p2_horizontal))
+
+			start = (p2[0] - angle_arc_radius, p2[1] - angle_arc_radius)
+			end = (p2[0] + angle_arc_radius, p2[1] + angle_arc_radius)
+
+			# draw.arc([start, end], 0, start_angle, "orange", scale_multiplier)  # debug
+			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
+
+			# TODO: Improve text positioning
+			text_pos = util.line_midpoint(p2, util.line_midpoint(p1, p3))
+			text_pos = text_pos[0] - 40 * scale_multiplier, text_pos[1] - 20 * scale_multiplier
+			draw.text(text_pos, angle_c_label, "black", font)
 
 		return util.save_pillow_image(image)

@@ -1,0 +1,13 @@
+[Unit]
+Description=Grafana
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=grafana
+ExecStart=/home/grafana/bin/grafana-server
+WorkingDirectory=/home/grafana
+
+[Install]
+WantedBy=multi-user.target

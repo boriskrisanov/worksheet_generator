@@ -45,8 +45,8 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
 
         let valid = true
 
-        if (!numQuestions || numQuestions < 1 || numQuestions > 500) {
-            setNumQuestionsError("Enter a number between 1 and 500")
+        if (!numQuestions || numQuestions < 1 || numQuestions > 100) {
+            setNumQuestionsError("Enter a number between 1 and 100")
             valid = false
         } else {
             setNumQuestionsError("")
@@ -138,7 +138,7 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                 <TopicSelector
                     name="linear_equations"
                     topic="Linear equations"
-                    maxDifficulty={4}
+                    maxDifficulty={3}
                 />
                 <TopicSelector
                     name="simultaneous_equations"
