@@ -179,7 +179,7 @@ class Triangle:
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p3, util.line_midpoint(p1, p2))
 			text_pos = text_pos[0] + 10 * scale_multiplier, text_pos[1] + 10 * scale_multiplier
-			draw.text(text_pos, angle_a_label, "black", font)
+			draw.text(text_pos, str(angle_a_label), "black", font)
 
 		if show_angle_b:
 			p1_horizontal = Line(p1, (width, p1[1]))
@@ -199,7 +199,7 @@ class Triangle:
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p1, util.line_midpoint(p2, p3))
 			text_pos = text_pos[0] - 10 * scale_multiplier, text_pos[1] - 30 * scale_multiplier
-			draw.text(text_pos, angle_b_label, "black", font)
+			draw.text(text_pos, str(angle_b_label), "black", font)
 
 		if show_angle_c:
 			p2_horizontal = Line(p2, (width, p2[1]))
@@ -223,6 +223,6 @@ class Triangle:
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p2, util.line_midpoint(p1, p3))
 			text_pos = text_pos[0] - 40 * scale_multiplier, text_pos[1] - 20 * scale_multiplier
-			draw.text(text_pos, angle_c_label, "black", font)
+			draw.text(text_pos, str(angle_c_label), "black", font)
 
 		return util.save_pillow_image(image)
