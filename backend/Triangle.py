@@ -32,6 +32,8 @@ class Triangle:
 			self.side_b = random.uniform(min_side_b, max_side_b)
 
 			# Generate angles
+			# Everything will be in radians for now because standard library functions use radians.
+			# Angles will be converted to degrees at the end of the function.
 			try:
 				self.angle_a = random.uniform(radians(20), radians(80))
 				self.angle_b = asin(self.side_b * sin(self.angle_a) / self.side_a)
