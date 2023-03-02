@@ -1,6 +1,7 @@
 import random
+from dataclasses import dataclass
 from io import BytesIO
-from math import degrees, radians, sin, asin, sqrt, cos
+from math import sqrt, degrees
 from random import randint
 from typing import Optional
 
@@ -9,8 +10,14 @@ from PIL.ImageDraw import ImageDraw
 from sympy.geometry.line import Line
 
 import util
+from trig_util import *
+
+# Draws extra lines and info on the triangle image to make debugging easier
+# TODO: Maybe this should be an environment variable
+DEBUG_TRIANGLE_DRAW = False
 
 
+@dataclass
 class Triangle:
 	side_a: float
 	side_b: float
@@ -21,33 +28,28 @@ class Triangle:
 	angle_b: float
 	angle_c: float
 
-	def __init__(self, min_side_len=2.0, max_side_len=16.0):
+	def __init__(self, min_side_len=5.0, max_side_len=16.0):
+		# When a triangle is generated, it might be mathematically incorrect or have small side lengths/angles.
+		# The loop will keep running until a good triangle is generated, at which point we will break out of the loop.
 		while True:
-			# Generate sides A and B
 			self.side_a = random.uniform(min_side_len, max_side_len)
+			self.angle_a = random.uniform(20, 100)
 
-			# side_b = side_a ± 5
-			min_side_b = self.side_a - 5
-			max_side_b = self.side_a + 5
-			self.side_b = random.uniform(min_side_b, max_side_b)
+			self.angle_b = random.uniform(20, 100)
+			self.side_b = sin(self.angle_b) / (sin(self.angle_a) / self.side_a)
 
-			# Generate angles
-			# Everything will be in radians for now because standard library functions use radians.
-			# Angles will be converted to degrees at the end of the function.
+			self.angle_c = 180 - self.angle_a - self.angle_b
+
 			try:
-				self.angle_a = random.uniform(radians(20), radians(80))
-				self.angle_b = asin(self.side_b * sin(self.angle_a) / self.side_a)
-				self.angle_c = 180 - self.angle_a - self.angle_b
+				self.side_c = sqrt(self.side_a ** 2 + self.side_b ** 2 - 2 * self.side_a * self.side_b * cos(self.angle_c))
 			except ValueError:
 				continue
 
-			# Calculate side C
-			self.side_c = sqrt(self.side_a ** 2 + self.side_b ** 2 - 2 * self.side_a * self.side_b * cos(self.angle_c))
-
-			# Convert everything back to degrees
-			self.angle_a = degrees(self.angle_a)
-			self.angle_b = degrees(self.angle_b)
-			self.angle_c = degrees(self.angle_c)
+			if self.angle_a < 10 or self.angle_b < 10 or self.angle_c < 10 \
+							or self.side_a < 2 or self.side_b < 2 or self.side_c < 2 \
+							or self.side_a > 30 or self.side_b > 30 or self.side_c > 30:
+				# Bad triangle, generate a new one
+				continue
 
 			break
 
@@ -84,8 +86,6 @@ class Triangle:
 		:param show_angle_c:
 		:param show_angle_b:
 		:param show_angle_a:
-
-		:return:
 		"""
 		if show_angle_a and angle_a_label is None:
 			angle_a_label = str(round(self.angle_a, 2))
@@ -154,15 +154,20 @@ class Triangle:
 		side_b_line = Line(p3, p2)
 		side_c_line = Line(p3, p1)
 
+		if DEBUG_TRIANGLE_DRAW:
+			draw.text(p1, "p1 (b)", "red", font)
+			draw.text(p2, "p2 (c)", "red", font)
+			draw.text(p3, "p3 (a)", "red", font)
+
+			draw.text(side_a_midpoint, "A", "red", font)
+			draw.text(side_b_midpoint, "B", "red", font)
+			draw.text(side_c_midpoint, "C", "red", font)
+
 		if show_angle_a:
 			p3_horizontal = Line(p3, (width, p3[1]))
 			# draw.line((p3, p3_horizontal.p2.args[0], p3[1]), "blue", 4)  # debug
 			start_angle = p3_horizontal.angle_between(side_b_line)
 			start_angle = degrees(float(start_angle))
-
-			# draw.text(p1, "p1", "red", font)  # debug
-			# draw.text(p2, "p2", "red", font)  # debug
-			# draw.text(p3, "p3", "red", font)  # debug
 
 			arc_angle = 360 - degrees(p3_horizontal.angle_between(side_c_line))
 
@@ -176,12 +181,11 @@ class Triangle:
 				start_angle = 360 - start_angle
 
 			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
-			# draw.arc([start, end], 0, start_angle, "orange", scale_multiplier)  # debug
 
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p3, util.line_midpoint(p1, p2))
 			text_pos = text_pos[0] + 10 * scale_multiplier, text_pos[1] + 10 * scale_multiplier
-			draw.text(text_pos, str(angle_a_label), "black", font)
+			draw.text(p3, str(angle_a_label), "black", font)
 
 		if show_angle_b:
 			p1_horizontal = Line(p1, (width, p1[1]))
@@ -201,11 +205,11 @@ class Triangle:
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p1, util.line_midpoint(p2, p3))
 			text_pos = text_pos[0] - 10 * scale_multiplier, text_pos[1] - 30 * scale_multiplier
-			draw.text(text_pos, str(angle_b_label), "black", font)
+			draw.text(p1, str(angle_b_label), "black", font)
 
 		if show_angle_c:
 			p2_horizontal = Line(p2, (width, p2[1]))
-			# draw.line((p3, p3_horizontal.p2.args[0], p3[1]), "blue", 4)  # debug
+
 			start_angle = p2_horizontal.angle_between(side_a_line)
 			start_angle = degrees(float(start_angle)) + 180
 
@@ -225,6 +229,6 @@ class Triangle:
 			# TODO: Improve text positioning
 			text_pos = util.line_midpoint(p2, util.line_midpoint(p1, p3))
 			text_pos = text_pos[0] - 40 * scale_multiplier, text_pos[1] - 20 * scale_multiplier
-			draw.text(text_pos, str(angle_c_label), "black", font)
+			draw.text(p2, str(angle_c_label), "black", font)
 
 		return util.save_pillow_image(image)

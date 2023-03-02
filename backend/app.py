@@ -7,7 +7,7 @@ from RightAngleTriangle import RightAngleTriangle
 from Triangle import Triangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
 	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws, circles, \
-	expanding_brackets, inequalities
+	expanding_brackets, inequalities, sine_rule
 from util import random_element
 
 app = Flask(__name__)
@@ -72,6 +72,8 @@ def index():
 				questions.append(expanding_brackets.generate(difficulty))
 			case "inequalities":
 				questions.append(inequalities.generate(difficulty))
+			case "sine_rule":
+				questions.append(sine_rule.generate())
 
 	questions_json = [question.json() for question in questions]
 
@@ -136,6 +138,8 @@ def triangle_question_image():
 		show_angle_c=angle_c_label is not None
 	)
 
+	print(f"Triangle image: {triangle}")
+
 	return send_file(image, "image/webp")
 
 
@@ -155,3 +159,7 @@ def circle_question_image():
 	image = circle.create_image(show_diameter, show_radius, diameter, radius)
 
 	return send_file(image, "image/webp")
+
+
+if __name__ == "__main__":
+	app.run(debug=True)

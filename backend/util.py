@@ -12,9 +12,31 @@ T = TypeVar("T")
 def random_element(array: list[T]) -> T:
 	"""Returns a random element from the array"""
 	if not len(array):
-		raise Exception("Empty array")
+		raise Exception("Array cannot be empty")
+
 	index = randint(0, len(array) - 1)
 	return array[index]
+
+
+def random_n_elements(array: list[T], n: int) -> list[T]:
+	"""Returns n different random elements from the array. n cannot exceed the length of the array."""
+	if n > len(array):
+		raise RuntimeError("n cannot be greater than the length of the array")
+
+	result = []
+	copied_array = array[:]
+
+	for _ in range(n):
+		index = randint(0, len(copied_array) - 1)
+		result.append(copied_array[index])
+		copied_array.pop(index)
+
+	return result
+
+
+def list_difference(l1: list[T], l2: list[T]) -> list[T]:
+	"""Returns the elements that are only present in one of the two lists"""
+	return list(set(l1).symmetric_difference(set(l2)))
 
 
 def randint_not_zero(min: int, max: int) -> int:

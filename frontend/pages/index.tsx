@@ -135,6 +135,7 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                 </span>
                 {topicsError != "" && <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{topicsError}</Alert>}
                 {serverErrorMessage != "" && <Alert severity="error" style={{ marginTop: 10, width: "fit-content" }}>{serverErrorMessage}</Alert>}
+                {/* TODO: Add topic groups */}
                 <TopicSelector
                     name="linear_equations"
                     topic="Linear equations"
@@ -169,6 +170,10 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                 <TopicSelector
                     name="right_angle_trig_missing_angles"
                     topic="Finding missing angles in right angled triangles"
+                />
+                <TopicSelector
+                    name="sine_rule"
+                    topic="Sine rule"
                 />
                 <TopicSelector
                     name="simplifying"
