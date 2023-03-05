@@ -176,6 +176,10 @@ const Home: NextPage<Props> = ({ setQuestions }) => {
                     topic="Sine rule"
                 />
                 <TopicSelector
+                    name="cosine_rule"
+                    topic="Cosine rule"
+                />
+                <TopicSelector
                     name="simplifying"
                     topic="Simplifying"
                 />

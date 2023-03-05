@@ -7,7 +7,7 @@ from RightAngleTriangle import RightAngleTriangle
 from Triangle import Triangle
 from topics import linear_equations, simultaneous_equations, factorising_quadratics, solving_quadratics, \
 	pythagoras_theorem, right_angle_trig_missing_sides, right_angle_trig_missing_angles, simplifying, index_laws, circles, \
-	expanding_brackets, inequalities, sine_rule
+	expanding_brackets, inequalities, sine_rule, cosine_rule
 from util import random_element
 
 app = Flask(__name__)
@@ -74,6 +74,8 @@ def index():
 				questions.append(inequalities.generate(difficulty))
 			case "sine_rule":
 				questions.append(sine_rule.generate())
+			case "cosine_rule":
+				questions.append(cosine_rule.generate())
 
 	questions_json = [question.json() for question in questions]
 
