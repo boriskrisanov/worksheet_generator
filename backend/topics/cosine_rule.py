@@ -4,14 +4,17 @@ from Triangle import Triangle
 
 
 def generate() -> Question:
-	missing_property = util.random_element(["side, angle"])
-	missing_side = known_angle = answer = ""
+	missing_property = util.random_element(["angle"])
+	missing_side = known_angle = ""
+	angle_a_label = angle_b_label = angle_c_label = ""
+	side_a_label = side_b_label = side_c_label = ""
+	answer = 0.0
+
 	triangle = Triangle()
 
 	print(f"Cosine rule: {triangle}")
 
-	# if missing_property == "side":
-	if True:
+	if missing_property == "side":
 		known_sides = util.random_n_elements(["a", "b", "c"], 2)
 		missing_side = util.list_difference(known_sides, ["a", "b", "c"])[0]
 		known_angle = missing_side
@@ -34,7 +37,24 @@ def generate() -> Question:
 		side_c_label = "𝑥" if missing_side == "c" else str(round(triangle.side_c, 1)) if "c" in known_sides else ""
 
 	else:
-		pass
+		missing_angle = util.random_element(["a", "b", "c"])
+
+		angle_a_label = "𝑥" if "a" == missing_angle else ""
+		angle_b_label = "𝑥" if "b" == missing_angle else ""
+		angle_c_label = "𝑥" if "c" == missing_angle else ""
+
+		side_a_label = str(round(triangle.side_a, 1))
+		side_b_label = str(round(triangle.side_b, 1))
+		side_c_label = str(round(triangle.side_c, 1))
+
+		if missing_angle == "a":
+			answer = str(round(triangle.angle_a, 2))
+
+		elif missing_angle == "b":
+			answer = str(round(triangle.angle_b, 2))
+
+		elif missing_angle == "c":
+			answer = str(round(triangle.angle_c, 2))
 
 	return Question(
 		"\\text{Find the value of 𝑥.}",
