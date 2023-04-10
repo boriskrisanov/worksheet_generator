@@ -13,6 +13,7 @@ from util import random_element
 app = Flask(__name__)
 CORS(app)
 
+MAX_WORKSHEET_QUESTIONS = 100
 
 @app.route("/worksheet", methods=["POST"])
 def index():
@@ -21,9 +22,9 @@ def index():
 		num_questions_str: str = request.json["questions"]  # type: ignore
 		num_questions = int(num_questions_str)
 		assert num_questions >= 1
-		assert num_questions <= 100
+		assert num_questions <= MAX_WORKSHEET_QUESTIONS
 	except (ValueError, AssertionError, KeyError):
-		return "Bad request: questions must be an integer between 1 and 100", 400
+		return f"Bad request: questions must be an integer between 1 and {MAX_WORKSHEET_QUESTIONS}", 400
 
 	# Get topics
 	try:
