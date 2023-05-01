@@ -16,13 +16,13 @@ def tan(degrees: float):
 	return math.tan(math.radians(degrees))
 
 
-def arc_sin(degrees: float):
-	return math.asin(math.radians(degrees))
+def arc_sin(value: float):
+	return math.degrees(math.asin(value))
 
 
-def arc_cos(degrees: float):
-	return math.acos(math.radians(degrees))
+def arc_cos(value: float):
+	return math.degrees(math.acos(value))
 
 
-def arc_tan(degrees: float):
-	return math.atan(math.radians(degrees))
+def arc_tan(value: float):
+	return math.degrees(math.atan(value))
