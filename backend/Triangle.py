@@ -98,7 +98,7 @@ class Triangle:
 		width = 400 * scale_multiplier
 		height = 300 * scale_multiplier
 
-		image = image = Image.new("RGB", (width, height), color="white")
+		image = Image.new("RGB", (width, height), color="white")
 		draw = ImageDraw(image)
 		# noinspection SpellCheckingInspection
 		font = ImageFont.truetype("./fonts/NotoSansMath-Regular.ttf", 18 * scale_multiplier)
@@ -183,8 +183,8 @@ class Triangle:
 			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
 
 			# TODO: Improve text positioning
-			text_pos = util.line_midpoint(p3, util.line_midpoint(p1, p2))
-			text_pos = text_pos[0] + 10 * scale_multiplier, text_pos[1] + 10 * scale_multiplier
+			# text_pos = util.line_midpoint(p3, util.line_midpoint(p1, p2))
+			# text_pos[0] + 10 * scale_multiplier, text_pos[1] + 10 * scale_multiplier
 			draw.text(p3, str(angle_a_label), "black", font)
 
 		if show_angle_b:
@@ -203,8 +203,8 @@ class Triangle:
 			# draw.rectangle((start, end), None, "red")
 
 			# TODO: Improve text positioning
-			text_pos = util.line_midpoint(p1, util.line_midpoint(p2, p3))
-			text_pos = text_pos[0] - 10 * scale_multiplier, text_pos[1] - 30 * scale_multiplier
+			# text_pos = util.line_midpoint(p1, util.line_midpoint(p2, p3))
+			# text_pos[0] - 10 * scale_multiplier, text_pos[1] - 30 * scale_multiplier
 			draw.text(p1, str(angle_b_label), "black", font)
 
 		if show_angle_c:
@@ -227,8 +227,8 @@ class Triangle:
 			draw.arc([start, end], start_angle, arc_angle, "black", scale_multiplier)
 
 			# TODO: Improve text positioning
-			text_pos = util.line_midpoint(p2, util.line_midpoint(p1, p3))
-			text_pos = text_pos[0] - 40 * scale_multiplier, text_pos[1] - 20 * scale_multiplier
+			# text_pos = util.line_midpoint(p2, util.line_midpoint(p1, p3))
+			# text_pos[0] - 40 * scale_multiplier, text_pos[1] - 20 * scale_multiplier
 			draw.text(p2, str(angle_c_label), "black", font)
 
 		return util.save_pillow_image(image)

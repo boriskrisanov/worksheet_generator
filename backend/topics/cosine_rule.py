@@ -5,9 +5,6 @@ from Triangle import Triangle
 
 def generate() -> Question:
 	missing_property = util.random_element(["angle"])
-	missing_side = known_angle = ""
-	angle_a_label = angle_b_label = angle_c_label = ""
-	side_a_label = side_b_label = side_c_label = ""
 	answer = 0.0
 
 	triangle = Triangle()
