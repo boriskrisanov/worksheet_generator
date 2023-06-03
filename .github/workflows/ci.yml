@@ -30,7 +30,7 @@ jobs:
           pip install -r requirements.dev.txt
 
       - name: Run mypy
-        run: mypy --explicit-package-bases --check-untyped-defs .
+        run: mypy --cache-dir=/dev/null --explicit-package-bases --check-untyped-defs .
 
       - name: Run pytest
         run: pytest
